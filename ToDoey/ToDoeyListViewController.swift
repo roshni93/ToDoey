@@ -10,7 +10,7 @@ import UIKit
 //if ur super class is a UITableViewController then you do not need to inherit any protocols lyk Data Source , Delegate any
 class ToDoeyListViewController: UITableViewController {
 
-    let itemArray = ["Find Milk" , "Buy Eggs" , "Destroy Demogogron"]
+    var itemArray = ["Find Milk" , "Buy Eggs" , "Destroy Demogogron"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,29 @@ class ToDoeyListViewController: UITableViewController {
     
     
     
+    // MARK - Add New Items
     
+    
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
+       //alert button creartion
+        let alert = UIAlertController(title: "Add New TodDoey Item" , message: "" , preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
+            //what will happen once the user clicks th Add button on UIAlert
+           self.itemArray.append(textField.text!) //append the values into the itemArray
+            self.tableView.reloadData() //it will reload the textField and save the new data to the itemArray
+        }
+        //adding a textField to our alert message
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder = "Create New Item" //giving the placeholder to the text field
+            textField = alertTextField // alertTextField is the local Variable inside the closure so we are creating a local textField and assing the value of alertTextField to make it global in function
+            
+      
+        }
+       alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
     
     
     
