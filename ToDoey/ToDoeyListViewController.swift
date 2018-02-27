@@ -11,12 +11,17 @@ import UIKit
 class ToDoeyListViewController: UITableViewController {
 
     var itemArray = ["Find Milk" , "Buy Eggs" , "Destroy Demogogron"]
+    //use userDefault
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        //to persist the data
+        if let items = defaults.array(forKey: "ToDoListArray") as? [String] {
+        itemArray = items
     }
-
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
     }
@@ -60,6 +65,8 @@ class ToDoeyListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //what will happen once the user clicks th Add button on UIAlert
            self.itemArray.append(textField.text!) //append the values into the itemArray
+            //saving that updated array in my UserDefault
+            self.defaults.setValue(self.itemArray, forKey: "ToDoListArray")
             self.tableView.reloadData() //it will reload the textField and save the new data to the itemArray
         }
         //adding a textField to our alert message
